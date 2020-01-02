@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="shortcut icon" type="image/png" href="{% static 'images/logo_favic.png' %}">
+    <link rel="stylesheet" href="{% static 'css/core-style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    {% block ascript %}
+    {% endblock %}
+
+</head>
+
+<body onload="reload()">
+    <div class="search-wrapper section-padding-100">
+        <div class="search-close">
+            <i class="fa fa-close" aria-hidden="true"></i>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="search-content">
+                        <form action="{% url 'buyer:search' %}" method="get">
+                            <input type="search" name="search_box" id="search_box" placeholder="Type your keyword...">
+                            <button type="submit"><img src="{% static 'img/core-img/search.png' %}" alt=""></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content-wrapper d-flex clearfix">
+
+        <div class="mobile-nav">
+            <div class="amado-navbar-brand">
+                <a href="{% url 'buyer:home' %}"><img src="{% static 'img/logo_cm.png' %}" alt=""></a>
+            </div>
+            <div class="amado-navbar-toggler">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <header class="header-area clearfix">
+            <div class="nav-close">
+                <i class="fa fa-close" aria-hidden="true"></i>
+            </div>
+            <div class="logo">
+                <a href="{% url 'buyer:home' %}"><img src="{% static 'img/logo_cm.png' %}" alt=""></a>
+            </div>
+            <nav class="amado-nav">
+                <ul>
+                    <li class="active"><a href="{% url 'buyer:home' %}">Home</a></li>
+                    <li><a href="{% url 'buyer:shop' 0 %}">Shop</a></li>
+                    {% if user.is_authenticated %}
+                    <li class=""><a href="{% url 'my-profile' %}">View Profile</a></li>
+                    <li clas=""><a href="{% url 'change_password' %}">Change Password</a></li>
+                    <li class=""><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li class=""><a href="{% url 'login' %}">Login</a></li>
+                    <li class=""><a href="{% url 'register' %}">Sign Up</a></li>
+                    {% endif %}
+                    {% if cart|length %}
+                    <li><a href="{% url 'buyer:checkout' %}">Checkout</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <div class="cart-fav-search mb-100">
+                <a href="{% url 'cart:cart_detail' %}" class="cart-nav"><img src="{% static 'img/core-img/cart.png' %}" alt=""> Cart <span>({{ cart|length }})</span></a>
+                <a href="#" class="search-nav"><img src="{% static 'img/core-img/search.png' %}" alt=""> Search</a>
+            </div>
+            <div class="social-info d-flex justify-content-between">
+                <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            </div>
+        </header>
+        {% block content %} {% endblock %}
+
+    <footer class="footer_area clearfix">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-lg-4">
+                    <div class="single_widget_area">
+                        <div class="footer-logo mr-50">
+                            <a href="{% url 'buyer:home' %}"><img src="{% static 'img/logo_cm.png' %}" alt=""></a>
+                        </div>
+                        <p class="copywrite">
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="{% url 'buyer:home' %}" target="_blank">CollegeMart</a>
+</p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <div class="single_widget_area">
+                        <div class="footer_menu">
+                            <nav class="navbar navbar-expand-lg justify-content-end">
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                                <div class="collapse navbar-collapse" id="footerNavContent">
+                                    <ul class="navbar-nav ml-auto">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="{% url 'buyer:home' %}">Home</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'buyer:shop' 0 %}">Shop</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'cart:cart_detail' %}">Cart</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'buyer:checkout' %}">Checkout</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'feedback:home' %}">Feedback</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/active.js' %}"></script>
+    {% block script %}
+    {% endblock %}
+
+</body>
+
+</html>

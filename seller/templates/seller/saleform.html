@@ -1,0 +1,185 @@
+{% extends 'buyer/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+<head>
+    {% block ascript %}
+    <style>
+    body{
+        background-color:whitesmoke;
+        background-repeat: no-repeat;
+        background-size:100% 100%;
+        background-attachment:fixed;
+    }
+
+    #id_description,#id_description1,#id_description2{
+        height:10em;
+
+    }
+    .button {
+      background-color: rgba(251, 183, 16, 0.96);
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      font-size: 16px;
+      margin: 4px 2px;
+      opacity: 1;
+      transition: 0.3s;
+    }
+
+    .button:hover {opacity: 0.6;box-shadow:3px 5px 7px #888888}
+
+    button {
+      background-color: rgba(251, 183, 16, 0.96);
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      font-size: 16px;
+      margin: 4px 2px;
+      opacity: 1;
+      transition: 0.3s;
+    }
+
+    button:hover {opacity: 0.6;box-shadow:3px 5px 7px #888888}
+
+    </style>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('#id_pname').addClass('form-control mb-4 transparent-input').attr("placeholder", "Product name");
+            $("#id_category").addClass("form-control mb-4 transparent-input");
+            $('#id_image').addClass('form-control-file transparent-input');
+            $("#id_description").addClass("form-control mb-4 transparent-input").attr("placeholder", "Describe the product");
+            $('#id_price').addClass('form-control mb-4 transparent-input').attr("placeholder", "Price of the product");
+            $('#id_leasing_period').addClass('form-control mb-4 transparent-input').attr("placeholder", "leasing period");
+            $('#id_pname1').addClass('form-control mb-4 transparent-input').attr("placeholder", "Product name");
+            $("#id_category1").addClass("form-control mb-4 transparent-input");
+            $('#id_image1').addClass('form-control-file transparent-input');
+            $("#id_description1").addClass("form-control mb-4 transparent-input").attr("placeholder", "Describe the product");
+            $("#id_price1").addClass("form-control mb-4 transparent-input").attr("placeholder", "Price of the product");
+
+        });
+
+    </script>
+    {% endblock %}
+
+</head>
+{% block content %}
+<div>
+    <div id="salead"
+     style="box-shadow:5px 10px 15px #888;display:none ;width: 700px;margin-left: 30%;margin-top:2%; background-color:white;border-color: white;border-width: 1.5px;">
+    <div  style="padding-left: 10%;padding-right: 10%;padding-bottom:7%;background-color: white">
+        <form action="{% url 'seller:saleform.home' %}" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-8 display-2">
+                    <p style="font-size: 80px;color: darkslategrey;">POST AD</p>
+                </div>
+                <div class="col-lg-4 display-2 ">
+                    <button onclick="lease()">Leasing Ad</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    Product name:
+                    {{form3.pname}}
+                </div>
+                <div class="col-lg-6">
+                    Amount:
+                    {{form3.price}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    Photo:
+                    {{form3.image}}
+                </div>
+                <div class="col-lg-6">
+                    Category:<br>
+                    {{form3.category}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+               <br>     DESCRIPTION:
+                    {{form3.description}}
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                     <input type="submit" value="POST AD" class="button" style="width: 100%;font-size:20px ">
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="leasead"
+     style="box-shadow:5px 10px 15px #888;display:none ;width: 700px;margin-left: 30%;margin-top:2%; background-color:white;border-color: white;border-width: 1.5px;">
+    <div style="padding-left: 10%;padding-right: 10%;padding-bottom:7%;background-color: white">
+        <form action="{% url 'seller:saleform.home' %}" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-8 display-2">
+                <p style="font-size: 80px;color: darkslategrey;">POST AD</p>
+                </div>
+                <div class="col-lg-4 display-2">
+                    <button onclick="sale()">sale Ad</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    Product name:
+                    {{form5.pname1}}
+                </div>
+                <div class="col-lg-6">
+                    Leasing Period(in months):
+                    {{form5.leasing_period}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    Photo:
+                    {{form5.image1}}
+                </div>
+                <div class="col-lg-6">
+                    Category:<br>
+                    {{form5.category1}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                 <br>   DESCRIPTION:
+                    {{form5.description1}}
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                     <input type="submit" value="post ad" class="button" style="width: 100%;">
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+<script>
+
+function lease(){
+    $('#salead').fadeOut(500);
+    $('#leasead').delay(500).fadeIn(500);
+}
+function sale(){
+    $('#leasead').fadeOut(500);
+    $('#salead').delay(500).fadeIn(500);
+}
+function reload(){
+    $('#salead').fadeIn(500)
+}
+</script>
+{% endblock content %}
